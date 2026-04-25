@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# generated artefacts
+report.html
+report.txt
+*.pdf

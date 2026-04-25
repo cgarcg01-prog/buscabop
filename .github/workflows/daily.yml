@@ -1,0 +1,41 @@
+name: Daily BOP check
+
+on:
+  schedule:
+    # 13:00 UTC = 15:00 Madrid (CEST) / 14:00 Madrid (CET).
+    # GitHub Actions cron is best-effort and may drift a few minutes.
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - id: scan
+        run: python scripts/check_bop.py
+
+      - name: Send email on match
+        if: steps.scan.outputs.matches_found == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          from: BuscaBOP <${{ secrets.GMAIL_USER }}>
+          to: cgarcg01@gmail.com
+          subject: "BOP León — coincidencias del ${{ steps.scan.outputs.bop_date }}"
+          html_body: file://report.html

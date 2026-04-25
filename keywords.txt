@@ -1,0 +1,9 @@
+# One keyword or phrase per line. Lines starting with # are ignored.
+# Matching is case-insensitive and accent-insensitive (so "expropiacion"
+# matches "Expropiación", "EXPROPIACIÓN", etc.).
+#
+# Edit this file from the GitHub mobile app: open the repo -> tap this
+# file -> pencil icon -> commit. The next daily run picks it up.
+
+expropiación forzosa
+plan urbanístico
