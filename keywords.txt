@@ -2,8 +2,9 @@
 # Matching is case-insensitive and accent-insensitive (so "expropiacion"
 # matches "Expropiación", "EXPROPIACIÓN", etc.).
 #
-# Edit this file from the GitHub mobile app: open the repo -> tap this
-# file -> pencil icon -> commit. The next daily run picks it up.
+# Edit this file from the GitHub mobile app: open the repo, tap this file,
+# tap the three-dots menu -> Edit file -> Commit changes. The next daily run
+# picks it up.
 
 Villablino
 Corradina

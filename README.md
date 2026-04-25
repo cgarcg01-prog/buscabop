@@ -53,6 +53,21 @@ Open the repo on GitHub → **Actions** tab → **Daily BOP check** → **Run wo
 The job takes about a minute. If today's BOP contains a keyword, an email
 arrives shortly after.
 
+## Manual run with overrides
+
+The same **Run workflow** dialog has two optional fields, useful for testing
+or for one-off searches:
+
+- **Override date (DD-MM-YYYY)** — e.g. `22-04-2026` to scan a specific past
+  bulletin instead of today's. Leave blank to use today.
+- **Override keywords** — comma-, semicolon- or newline-separated, e.g.
+  `expropiacion forzosa, plan urbanistico`. Leave blank to use the current
+  `keywords.txt`. Overrides only apply to that single run; the file is not
+  modified.
+
+Filling either or both lets you reproduce a past day's results, sanity-check
+a new keyword before adding it, or trigger a real email to verify SMTP.
+
 ## Schedule
 
 The cron is `0 13 * * *` (13:00 UTC every day = 15:00 in Madrid summer time,
