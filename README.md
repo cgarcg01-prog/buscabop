@@ -11,7 +11,7 @@ nothing is sent.
 
 1. Open this repository in the GitHub mobile app (or `github.com` in a mobile browser).
 2. Tap `keywords.txt`.
-3. Tap the pencil icon, edit, and commit.
+3. Tap the **⋯** (three dots) → **Edit file** → make changes → **Commit changes** → **Commit directly to main**.
 
 The next daily run picks up the new list automatically. Lines starting with `#`
 are comments. Matching is case- and accent-insensitive (`expropiacion` matches
