@@ -5,5 +5,7 @@
 # Edit this file from the GitHub mobile app: open the repo -> tap this
 # file -> pencil icon -> commit. The next daily run picks it up.
 
-expropiación forzosa
-plan urbanístico
+Villablino
+Corradina
+Subastas
+subasta
