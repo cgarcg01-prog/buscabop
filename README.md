@@ -53,6 +53,24 @@ Open the repo on GitHub → **Actions** tab → **Daily BOP check** → **Run wo
 The job takes about a minute. If today's BOP contains a keyword, an email
 arrives shortly after.
 
+## Run the workflow from your phone
+
+The GitHub mobile *app* (iOS/Android) does **not** expose `Run workflow`,
+so use your phone's browser instead — bookmark this for one-tap access:
+
+`https://github.com/cgarcg01-prog/buscabop/actions/workflows/daily.yml`
+
+Steps:
+
+1. Open the bookmark.
+2. Tap **Run workflow** (top-right button on the runs list — you may need
+   to scroll right or tap the dropdown chevron).
+3. Optionally fill the **date** and/or **keywords** override fields (see
+   next section).
+4. Tap the green **Run workflow** confirmation button.
+5. Pull-to-refresh after ~30 s; the new run appears at the top with a
+   spinner → green check on success.
+
 ## Manual run with overrides
 
 The same **Run workflow** dialog has two optional fields, useful for testing
