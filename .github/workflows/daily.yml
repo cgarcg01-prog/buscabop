@@ -6,6 +6,15 @@ on:
     # GitHub Actions cron is best-effort and may drift a few minutes.
     - cron: '0 13 * * *'
   workflow_dispatch:
+    inputs:
+      date:
+        description: "Override date (DD-MM-YYYY). Leave blank to use today."
+        required: false
+        type: string
+      keywords:
+        description: "Override keywords (comma-, semicolon- or newline-separated). Leave blank to use keywords.txt."
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -24,6 +33,9 @@ jobs:
       - run: pip install -r requirements.txt
 
       - id: scan
+        env:
+          BOP_DATE: ${{ inputs.date }}
+          BOP_KEYWORDS_INLINE: ${{ inputs.keywords }}
         run: python scripts/check_bop.py
 
       - name: Send email on match

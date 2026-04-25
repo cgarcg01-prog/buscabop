@@ -211,18 +211,32 @@ def parse_cli_date(s: str) -> date:
     return datetime.strptime(s, "%d-%m-%Y").date()
 
 
+def parse_inline_keywords(s: str) -> list[str]:
+    out: list[str] = []
+    for chunk in re.split(r"[\n,;]+", s):
+        c = chunk.strip()
+        if c and not c.startswith("#"):
+            out.append(c)
+    return out
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--date",
-        type=parse_cli_date,
-        help="Override target date in DD-MM-YYYY format (for testing).",
+        help="Override target date in DD-MM-YYYY format (for testing). "
+             "Falls back to env var BOP_DATE.",
     )
     parser.add_argument(
         "--keywords",
         type=Path,
         default=Path(__file__).resolve().parent.parent / "keywords.txt",
-        help="Path to the keywords file.",
+        help="Path to the keywords file (used when no inline override is given).",
+    )
+    parser.add_argument(
+        "--keywords-inline",
+        help="Override keywords inline. Comma-, semicolon- or newline-separated. "
+             "Falls back to env var BOP_KEYWORDS_INLINE.",
     )
     parser.add_argument(
         "--report",
@@ -232,13 +246,22 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    keywords = load_keywords(args.keywords)
+    inline_src = args.keywords_inline or os.environ.get("BOP_KEYWORDS_INLINE", "")
+    if inline_src.strip():
+        keywords = parse_inline_keywords(inline_src)
+        print(f"Using inline keywords ({len(keywords)} item(s)): {keywords}")
+    else:
+        keywords = load_keywords(args.keywords)
     if not keywords:
-        print(f"No keywords configured in {args.keywords}. Nothing to do.", file=sys.stderr)
+        print("No keywords configured. Nothing to do.", file=sys.stderr)
         write_github_output("matches_found", "false")
         return 0
 
-    target = args.date or datetime.now(ZoneInfo("Europe/Madrid")).date()
+    date_src = args.date or os.environ.get("BOP_DATE", "").strip()
+    if date_src:
+        target = parse_cli_date(date_src)
+    else:
+        target = datetime.now(ZoneInfo("Europe/Madrid")).date()
     print(f"Checking BOP León for {target.strftime('%d-%m-%Y')} with {len(keywords)} keyword(s).")
 
     session = requests.Session()
